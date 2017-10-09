@@ -200,6 +200,10 @@ HTTP Target: https://findemo-168618.appspot.com/us/branches
 
 # Quiz
 
+* What is a Route Rule, how is it used in Apigee Edge?
+
+* What is the relationship between a Route Rule and a Target Endpoint in an API Proxy?
+
 * What are some other scenarios where Route Rules could be beneficial?
 
 # Summary
