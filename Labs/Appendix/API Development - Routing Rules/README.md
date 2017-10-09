@@ -157,7 +157,7 @@ HTTP Target: https://findemo-168618.appspot.com/us/branches
 
 * After verifying the validation is working, click on the Develop tab to open the proxy editor. 
 
-![Open proxy editor](./media/open-develop-tab.png)
+![Open proxy editor](./media/open-develop-tab-1.png)
 
 * In the Proxy Editor, click on the default Proxy Endpoint and scroll down to the bottom of the XML. Add in the Route Rule for the USA endpoint and conditions to route to the correct target based on the structure of the zip code query parameter.
 
