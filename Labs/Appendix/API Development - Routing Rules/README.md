@@ -70,6 +70,110 @@ Existing API: https://findemo-168618.appspot.com/can/branches
 
 ![Confirmation](./media/proxy-wizard-6.png)
 
+* From the API Overview, click on the URL link. This should open up a list of bank branches from Canada. Once you've verified your API Proxy is working, click on the Develop tab to open the proxy editor. 
+
+![Open proxy editor](./media/open-develop-tab.png)
+
+* On the Proxy Editor, click on the *default* Target Endpoint
+
+![Default target endpoint](./media/default-target-endpoint.png)
+
+* In the XML definition, change the name attribute name on the default TargetEndpoint from *default* to *canada*
+
+![Change target name](./media/change-target-endpoint-name.png)
+
+* Click on the + button next to Target Endpoints to create a new target endpoint
+
+![New target endpoint](./media/new-target-endpoint.png)
+
+* Enter details for the US branch API endpoint
+
+![Target endpoint details](./media/target-endpoint-details.png)
+
+```
+Target Endpoint Name: usa
+HTTP Target: https://findemo-168618.appspot.com/us/branches
+```
+
+* Click on the Save button to bring up the save API proxy dialog
+
+![Save API Proxy](./media/save-api-proxy-1.png)
+
+* Click on the *Save as New Revision* button on the Save dialog
+
+![Save API Proxy](./media/save-api-proxy-2.png)
+
+* Click on +Step on the Request pipeline to add a new policy
+
+![New step](./media/new-step-1.png)
+
+* Scroll down and select the Raise Fault policy and enter a display name of *Missing Zip Code*, this will automatically populate the Name field to *Missing-Zip-Code*
+
+![Missing zip code](./media/missing-zip-code.png)
+
+* Click on the Missing Zip Code policy to open up the XML policy definition in the editor pane. Replace the XML definition with the one provided below.
+
+![Missing zip code](./media/missing-zip-code-def.png)
+
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="Missing-Zip-Code">
+    <DisplayName>Missing Zip Code</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Payload contentType="text/plain">Missing required query parameter: zipcode</Payload>
+            <StatusCode>400</StatusCode>
+            <ReasonPhrase>Bad Request</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>
+```
+
+* Click on the *default* Proxy Endpoint
+
+![Default proxy endpoint](./media/default-proxy-endpoint.png)
+
+* Add a condition to only raise a fault if the zipcode query parameter wasn't supplied in the API request. Once the condition is added, click on the Save button.
+
+![Missing zip code condition](./media/add-missing-zipcode-condition.png)
+
+* Once the API has been saved, click on the Deployment drop down menu and select the test option. Note that in the image below there is a dev environment, this will very likely not be present in your organization.
+
+![deploy-new-revision](./media/deploy-new-revision.png)
+
+* When the deployment dialog displays, click on the Deploy button.
+
+![deploy-new-revision](./media/deploy-new-revision-dialog.png)
+
+* Click on the Overview tab
+
+![Open overview tab](./media/open-overview-tab-1.png)
+
+* Click on the API URL to verify the condition is working. If everything is working correctly, you will see a message indicating: `Missing required query parameter: zipcode`
+
+![Open URL](./media/open-api-url-1.png)
+
+* After verifying the validation is working, click on the Develop tab to open the proxy editor. 
+
+![Open proxy editor](./media/open-develop-tab.png)
+
+* In the Proxy Editor, click on the default Proxy Endpoint and scroll down to the bottom of the XML. Add in the Route Rule for the USA endpoint and conditions to route to the correct target based on the structure of the zip code query parameter.
+
+![Add route rules](./media/add-route-rules.png)
+
+```
+    <RouteRule name="default">
+        <TargetEndpoint>canada</TargetEndpoint>
+        <Condition>request.queryparam.zipcode JavaRegex "[a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d"</Condition>
+    </RouteRule>
+    <RouteRule name="usa">
+        <TargetEndpoint>usa</TargetEndpoint>
+        <Condition>request.queryparam.zipcode JavaRegex "\d{5}"</Condition>
+    </RouteRule>
+```
+
 ![](./media/.png)
 
 # Lab Video
