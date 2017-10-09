@@ -184,7 +184,7 @@ HTTP Target: https://findemo-168618.appspot.com/us/branches
 
 * Add a query parameter called zipcode with a value of 70909: `?zipcode=70909`
 
-![Send API Call](./media/send-api-request.png)
+![Send API Call](./media/trace-api-request.png)
 
 * Now make another API call using a Canadian zip code value: `?zipcode=S1C 9P7` *Note that you will need to make this request outside the trace window due to limitations in sending query params with whitespace.*
 
