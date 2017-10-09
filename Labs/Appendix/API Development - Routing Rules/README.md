@@ -174,14 +174,41 @@ HTTP Target: https://findemo-168618.appspot.com/us/branches
     </RouteRule>
 ```
 
-![](./media/.png)
+* After the confirmation appears that your API Proxy has been saved, click on the Trace tab.
+
+![Open trace tab](./media/open-trace-tab.png)
+
+* Click on the Start Trace Session button
+
+![Start trace session](./media/start-trace-session.png)
+
+* Add a query parameter called zipcode with a value of 70909: `?zipcode=70909`
+
+![Send API Call](./media/send-api-request.png)
+
+* Now make another API call using a Canadian zip code value: `?zipcode=S1C 9P7` *Note that you will need to make this request outside the trace window due to limitations in sending query params with whitespace.*
+
+* Verify using Trace that your route rules are correctly sending Canadian zip codes to the Canadian endpoint and that US zip codes to the USA endpoint. 
 
 # Lab Video
 
+[Routing Rules Video](https://www.youtube.com/watch?v=elnCVKVM9yU&list=PLIXjuPlujxxxe3iTmLtgfIBgpMo7iD7fk&index=15)
+
 # Earn Extra Points
+
+* The current configuration does not route appropriately in the case that a zip code does not conform to a US or Canadian zip code. For instance, if you send a value of `?zipcode=ABC123` no route rules are matched. Start a trace session and see what happens when you send this value. Add in the necessary logic to your API Proxy to return an empty JSON array when an invalid zip code is provided.
 
 # Quiz
 
+* What are some other scenarios where Route Rules could be beneficial?
+
 # Summary
 
+This lab demonstrates how to use route rules to conditionally route an API request to multiple backends based on some aspect of the incoming request. By applying Route Rules you can use Apigee Edge to provide a single facade to create a more usable API for your consumers.
+
 # References
+
+[Route Rules Documentation](http://docs.apigee.com/api-services/content/understanding-routes)
+
+[Routing Rules Tutorial](https://www.youtube.com/watch?v=elnCVKVM9yU&list=PLIXjuPlujxxxe3iTmLtgfIBgpMo7iD7fk&index=15)
+
